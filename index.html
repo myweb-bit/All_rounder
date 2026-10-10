@@ -1,0 +1,1504 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>NEXUS TOOLS | Ultra Hub by Mozahid</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- HTML5 QR Code Library -->
+    <script src="https://unpkg.com/html5-qrcode"></script>
+
+    <style>
+        :root {
+            --bg-deep: #05070c;
+            --bg-card: rgba(13, 17, 28, 0.7);
+            --bg-input: rgba(18, 24, 40, 0.85);
+            --accent-primary: #ff2a5f;
+            --accent-primary-hover: #ff4777;
+            --accent-secondary: #00f2fe;
+            --accent-cyan-rgb: 0, 242, 254;
+            --accent-glow: rgba(255, 42, 95, 0.35);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-glass-hover: rgba(255, 255, 255, 0.18);
+            --text-pure: #ffffff;
+            --text-dim: #94a3b8;
+            --text-sub: #64748b;
+            --radius-outer: 22px;
+            --radius-inner: 14px;
+            --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+            --ease-smooth: cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            color: var(--text-pure);
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Interactive Dynamic Background Canvas */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Subtle mesh overlay */
+        .mesh-gradient {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 42, 95, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(0, 242, 254, 0.06) 0%, transparent 45%),
+                radial-gradient(circle at 50% 50%, rgba(5, 7, 12, 0.7) 0%, var(--bg-deep) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ================= INTRO CURTAIN ================= */
+        #introScreen {
+            position: fixed;
+            inset: 0;
+            background: #030408;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: opacity 0.7s var(--ease-smooth), visibility 0.7s;
+        }
+
+        .intro-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .intro-logo-glow {
+            width: 72px;
+            height: 72px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            display: grid;
+            place-items: center;
+            font-size: 2rem;
+            color: #fff;
+            margin-bottom: 24px;
+            box-shadow: 0 0 50px var(--accent-glow);
+            animation: introIconPop 1s var(--ease-out-back) forwards;
+        }
+
+        .intro-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2.2rem, 8vw, 3.8rem);
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            background: linear-gradient(180deg, #ffffff 40%, rgba(255, 255, 255, 0.5) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+
+        .intro-title span {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .intro-badge {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            padding: 6px 16px;
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.03);
+            border: var(--border-glass);
+            margin-bottom: 28px;
+        }
+
+        .intro-progress-bar {
+            width: 200px;
+            height: 3px;
+            background: rgba(255, 255, 255, 0.06);
+            border-radius: 4px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .intro-progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--accent-primary), var(--accent-secondary));
+            box-shadow: 0 0 16px var(--accent-secondary);
+            border-radius: 4px;
+            animation: fillProgress 1.9s var(--ease-smooth) forwards;
+        }
+
+        @keyframes fillProgress {
+            0% { width: 0%; }
+            50% { width: 65%; }
+            100% { width: 100%; }
+        }
+
+        @keyframes introIconPop {
+            0% { transform: scale(0.4) rotate(-15deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+
+        /* ================= HEADER ================= */
+        header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: rgba(5, 7, 12, 0.75);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: var(--border-glass);
+            padding: 14px 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .brand-section {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .menu-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: var(--border-glass);
+            color: #fff;
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: grid;
+            place-items: center;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-smooth);
+        }
+
+        .menu-btn:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--border-glass-hover);
+            transform: scale(1.03);
+        }
+
+        .menu-btn:active {
+            transform: scale(0.96);
+        }
+
+        .logo-text {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .logo-text span {
+            color: var(--accent-primary);
+        }
+
+        .header-meta {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .dev-badge-header {
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-dim);
+            background: rgba(255, 255, 255, 0.03);
+            border: var(--border-glass);
+            padding: 7px 14px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dev-badge-header .online-dot {
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: #22c55e;
+            box-shadow: 0 0 10px #22c55e;
+            animation: pulseDot 2s infinite ease-in-out;
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.3); opacity: 0.6; }
+        }
+
+        /* ================= SLIDE NAVIGATION DRAWER ================= */
+        .drawer-backdrop {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.65);
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.35s var(--ease-smooth), visibility 0.35s;
+        }
+
+        .drawer-backdrop.open {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .drawer-nav {
+            position: fixed;
+            top: 0;
+            left: -330px;
+            width: 310px;
+            height: 100%;
+            background: rgba(9, 12, 20, 0.95);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border-right: var(--border-glass);
+            z-index: 10001;
+            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.7);
+            transition: transform 0.4s var(--ease-smooth);
+            display: flex;
+            flex-direction: column;
+            padding: 24px 20px;
+        }
+
+        .drawer-nav.open {
+            transform: translateX(330px);
+        }
+
+        .drawer-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 20px;
+            border-bottom: var(--border-glass);
+            margin-bottom: 24px;
+        }
+
+        .drawer-header h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.15rem;
+            font-weight: 700;
+        }
+
+        .close-drawer-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+            transition: all 0.2s;
+        }
+
+        .close-drawer-btn:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-links-wrap {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            border-radius: var(--radius-inner);
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.25s var(--ease-smooth);
+            border: 1px solid transparent;
+            position: relative;
+        }
+
+        .nav-item i {
+            font-size: 1.1rem;
+            width: 22px;
+            text-align: center;
+            transition: transform 0.25s var(--ease-smooth);
+        }
+
+        .nav-item:hover {
+            color: #fff;
+            background: rgba(255, 255, 255, 0.03);
+            border-color: rgba(255, 255, 255, 0.05);
+            transform: translateX(4px);
+        }
+
+        .nav-item:hover i {
+            transform: scale(1.15);
+        }
+
+        .nav-item.active {
+            color: #fff;
+            background: linear-gradient(135deg, rgba(255, 42, 95, 0.15), rgba(255, 42, 95, 0.03));
+            border-color: rgba(255, 42, 95, 0.35);
+        }
+
+        .nav-item.active i {
+            color: var(--accent-primary);
+        }
+
+        .nav-item.active::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 25%;
+            height: 50%;
+            width: 3px;
+            background: var(--accent-primary);
+            border-radius: 0 4px 4px 0;
+            box-shadow: 0 0 10px var(--accent-primary);
+        }
+
+        .drawer-footer-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--border-glass);
+            border-radius: var(--radius-inner);
+            padding: 16px;
+            text-align: center;
+        }
+
+        .drawer-footer-card p {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-bottom: 4px;
+        }
+
+        .drawer-footer-card strong {
+            font-size: 0.85rem;
+            color: #fff;
+        }
+
+        /* ================= MAIN CONTAINER & TABS ================= */
+        main {
+            max-width: 860px;
+            margin: 0 auto;
+            padding: 36px 18px 80px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .app-panel {
+            display: none;
+            opacity: 0;
+            transform: translateY(16px);
+            transition: opacity 0.4s var(--ease-smooth), transform 0.4s var(--ease-smooth);
+        }
+
+        .app-panel.active {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Premium Glass Card */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: var(--border-glass);
+            border-radius: var(--radius-outer);
+            padding: 32px 28px;
+            box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
+            position: relative;
+            overflow: hidden;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            border-color: var(--border-glass-hover);
+        }
+
+        .glass-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+        }
+
+        .card-header-block {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 18px;
+            border-bottom: var(--border-glass);
+        }
+
+        .header-icon-badge {
+            width: 48px;
+            height: 48px;
+            border-radius: 14px;
+            background: rgba(255, 42, 95, 0.1);
+            border: 1px solid rgba(255, 42, 95, 0.25);
+            color: var(--accent-primary);
+            display: grid;
+            place-items: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+
+        .card-header-block h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .card-header-block p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* ================= UPLOAD ZONE (IMGBB) ================= */
+        .upload-field {
+            border: 2px dashed rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.015);
+            border-radius: var(--radius-inner);
+            padding: 44px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-field:hover, .upload-field.drag-active {
+            border-color: var(--accent-secondary);
+            background: rgba(0, 242, 254, 0.03);
+            box-shadow: 0 0 30px rgba(0, 242, 254, 0.12);
+            transform: translateY(-2px);
+        }
+
+        .upload-icon-anim {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.03);
+            border: var(--border-glass);
+            display: grid;
+            place-items: center;
+            font-size: 1.5rem;
+            color: var(--accent-secondary);
+            margin: 0 auto 16px;
+            transition: transform 0.3s var(--ease-out-back);
+        }
+
+        .upload-field:hover .upload-icon-anim {
+            transform: translateY(-4px) scale(1.1);
+        }
+
+        .upload-field h3 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            margin-bottom: 6px;
+        }
+
+        .upload-field p {
+            font-size: 0.8rem;
+            color: var(--text-dim);
+        }
+
+        /* Primary Action Buttons */
+        .btn-glow-primary {
+            background: linear-gradient(135deg, var(--accent-primary), #d91b49);
+            border: none;
+            color: #fff;
+            padding: 16px 24px;
+            border-radius: var(--radius-inner);
+            font-weight: 700;
+            font-size: 0.95rem;
+            width: 100%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 20px;
+            box-shadow: 0 10px 25px var(--accent-glow);
+            transition: all 0.3s var(--ease-smooth);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-glow-primary::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .btn-glow-primary:hover:not(:disabled)::after {
+            transform: translateX(100%);
+        }
+
+        .btn-glow-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 32px rgba(255, 42, 95, 0.5);
+        }
+
+        .btn-glow-primary:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-glow-primary:disabled {
+            opacity: 0.45;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Result Cards */
+        .output-card {
+            margin-top: 24px;
+            background: rgba(18, 24, 40, 0.6);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: var(--radius-inner);
+            padding: 20px;
+            display: none;
+            animation: cardAppear 0.4s var(--ease-smooth) forwards;
+        }
+
+        @keyframes cardAppear {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .preview-img-wrap {
+            position: relative;
+            max-height: 280px;
+            border-radius: 10px;
+            overflow: hidden;
+            background: #000;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: var(--border-glass);
+        }
+
+        .preview-img-wrap img {
+            max-width: 100%;
+            max-height: 280px;
+            object-fit: contain;
+        }
+
+        .input-inline-copy {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .copy-url-field {
+            flex: 1;
+            background: rgba(8, 10, 16, 0.9);
+            border: var(--border-glass);
+            color: #22c55e;
+            padding: 13px 16px;
+            border-radius: 10px;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .copy-url-field:focus {
+            border-color: var(--accent-secondary);
+        }
+
+        .btn-action-icon {
+            background: rgba(255, 255, 255, 0.05);
+            border: var(--border-glass);
+            color: #fff;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s;
+            white-space: nowrap;
+        }
+
+        .btn-action-icon:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--accent-secondary);
+        }
+
+        /* ================= INPUT ELEMENTS ================= */
+        .field-group {
+            margin-bottom: 20px;
+        }
+
+        .field-group label {
+            display: block;
+            font-size: 0.76rem;
+            font-weight: 700;
+            color: var(--text-dim);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+        }
+
+        .custom-input {
+            width: 100%;
+            background: var(--bg-input);
+            border: var(--border-glass);
+            color: #fff;
+            padding: 14px 18px;
+            border-radius: var(--radius-inner);
+            font-size: 0.95rem;
+            outline: none;
+            transition: all 0.25s ease;
+        }
+
+        .custom-input:focus {
+            border-color: var(--accent-secondary);
+            background: rgba(24, 32, 54, 0.9);
+            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
+        }
+
+        .select-field {
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat;
+            background-position: right 18px top 50%;
+            background-size: 11px auto;
+            padding-right: 44px;
+        }
+
+        /* ================= QR SCANNER & LIVE SCAN ================= */
+        #qrReaderBox {
+            width: 100%;
+            border-radius: var(--radius-inner);
+            overflow: hidden;
+            border: var(--border-glass);
+            margin-top: 18px;
+            display: none;
+            background: #000;
+        }
+
+        .divider-label {
+            text-align: center;
+            margin: 22px 0;
+            position: relative;
+        }
+
+        .divider-label::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-glass);
+            z-index: 0;
+        }
+
+        .divider-label span {
+            position: relative;
+            z-index: 1;
+            background: #0c101b;
+            padding: 4px 16px;
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-radius: 20px;
+        }
+
+        /* ================= ABOUT / PROFILE CARD ================= */
+        .profile-hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 10px 0;
+        }
+
+        .avatar-frame-wrap {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .avatar-glow-ring {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            padding: 3px;
+            box-shadow: 0 0 35px var(--accent-glow);
+        }
+
+        .avatar-content {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: #090c16;
+            display: grid;
+            place-items: center;
+            font-size: 2.6rem;
+            color: #fff;
+        }
+
+        .verified-badge-icon {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 28px;
+            height: 28px;
+            background: #2563eb;
+            border: 2px solid #090c16;
+            border-radius: 50%;
+            display: grid;
+            place-items: center;
+            font-size: 0.8rem;
+            color: #fff;
+        }
+
+        .profile-hero h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.85rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 4px;
+        }
+
+        .role-pill {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent-secondary);
+            background: rgba(0, 242, 254, 0.08);
+            border: 1px solid rgba(0, 242, 254, 0.25);
+            padding: 5px 16px;
+            border-radius: 30px;
+            margin-bottom: 18px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .profile-bio {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: var(--text-dim);
+            max-width: 580px;
+            margin-bottom: 28px;
+        }
+
+        .stat-grid-wrap {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .stat-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: var(--border-glass);
+            border-radius: var(--radius-inner);
+            padding: 20px 10px;
+            text-align: center;
+            transition: all 0.25s ease;
+        }
+
+        .stat-box:hover {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: var(--border-glass-hover);
+            transform: translateY(-3px);
+        }
+
+        .stat-box h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .stat-box span {
+            font-size: 0.72rem;
+            color: var(--text-sub);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* ================= FLOATING TOAST ================= */
+        #notificationToast {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(13, 18, 30, 0.95);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(0, 242, 254, 0.4);
+            color: #fff;
+            padding: 14px 22px;
+            border-radius: 12px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.35s var(--ease-out-back);
+            z-index: 1000000;
+            pointer-events: none;
+        }
+
+        #notificationToast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        #notificationToast i {
+            color: var(--accent-secondary);
+        }
+
+        /* Responsive Breakpoints */
+        @media (max-width: 640px) {
+            .glass-card {
+                padding: 24px 18px;
+            }
+            .stat-grid-wrap {
+                grid-template-columns: 1fr;
+            }
+            .input-inline-copy {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .btn-action-icon {
+                justify-content: center;
+            }
+            #notificationToast {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle / Glow Canvas -->
+    <canvas id="bgCanvas"></canvas>
+    <div class="mesh-gradient"></div>
+
+    <!-- ================= INTRO CURTAIN SCREEN ================= -->
+    <div id="introScreen">
+        <div class="intro-container">
+            <div class="intro-logo-glow">
+                <i class="fa-solid fa-layer-group"></i>
+            </div>
+            <h1 class="intro-title">NEXUS<span>HUB</span></h1>
+            <div class="intro-badge">Engineered by Mozahid</div>
+            <div class="intro-progress-bar">
+                <div class="intro-progress-fill"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= HEADER ================= -->
+    <header>
+        <div class="brand-section">
+            <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Menu">
+                <i class="fa-solid fa-bars-staggered"></i>
+            </button>
+            <div class="logo-text">
+                NEXUS<span>HUB</span>
+            </div>
+        </div>
+        <div class="header-meta">
+            <div class="dev-badge-header">
+                <span class="online-dot"></span>
+                <span>Mozahid</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ================= SLIDE NAVIGATION DRAWER ================= -->
+    <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
+    <aside class="drawer-nav" id="drawerNav">
+        <div class="drawer-header">
+            <h3>Menu Navigation</h3>
+            <button class="close-drawer-btn" onclick="toggleDrawer()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <div class="nav-links-wrap">
+            <div class="nav-item active" onclick="switchSection('tabImgbb', this)">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+                <span>Image To Link</span>
+            </div>
+            <div class="nav-item" onclick="switchSection('tabQrGen', this)">
+                <i class="fa-solid fa-qrcode"></i>
+                <span>QR Generator</span>
+            </div>
+            <div class="nav-item" onclick="switchSection('tabQrScan', this)">
+                <i class="fa-solid fa-camera-rotate"></i>
+                <span>QR Scanner</span>
+            </div>
+            <div class="nav-item" onclick="switchSection('tabAbout', this)">
+                <i class="fa-solid fa-user-gear"></i>
+                <span>About Developer</span>
+            </div>
+        </div>
+
+        <div class="drawer-footer-card">
+            <p>Crafted & Maintained by</p>
+            <strong>Mozahid</strong>
+        </div>
+    </aside>
+
+    <!-- ================= MAIN CONTENT ================= -->
+    <main>
+
+        <!-- 1. IMAGE TO LINK (IMGBB) -->
+        <section id="tabImgbb" class="app-panel active">
+            <div class="glass-card">
+                <div class="card-header-block">
+                    <div class="header-icon-badge">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                    <div>
+                        <h2>Image To Direct URL</h2>
+                        <p>Upload any picture and get an instant permanent link</p>
+                    </div>
+                </div>
+
+                <div class="upload-field" id="dropArea" onclick="document.getElementById('hiddenFileInput').click()">
+                    <div class="upload-icon-anim">
+                        <i class="fa-regular fa-image"></i>
+                    </div>
+                    <h3 id="uploadPromptText">Click or Drag & Drop Image</h3>
+                    <p>PNG, JPG, WEBP, GIF supported</p>
+                </div>
+                <input type="file" id="hiddenFileInput" accept="image/*" style="display:none;" onchange="handleFileChoose(this)">
+
+                <button class="btn-glow-primary" id="btnUploadImage" onclick="executeImageUpload()" disabled>
+                    <i class="fa-solid fa-bolt"></i> Generate Direct Link
+                </button>
+
+                <div class="output-card" id="imgResultBox">
+                    <div class="preview-img-wrap">
+                        <img id="imgPreviewTarget" src="" alt="Upload Preview">
+                    </div>
+                    <div class="field-group" style="margin-bottom:0;">
+                        <label>Generated Image URL</label>
+                        <div class="input-inline-copy">
+                            <input type="text" id="imgUrlOutput" class="copy-url-field" readonly>
+                            <button class="btn-action-icon" onclick="copyToClipboard('imgUrlOutput')">
+                                <i class="fa-regular fa-clone"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QR CODE GENERATOR -->
+        <section id="tabQrGen" class="app-panel">
+            <div class="glass-card">
+                <div class="card-header-block">
+                    <div class="header-icon-badge" style="background:rgba(0, 242, 254, 0.1); border-color:rgba(0, 242, 254, 0.25); color:var(--accent-secondary);">
+                        <i class="fa-solid fa-qrcode"></i>
+                    </div>
+                    <div>
+                        <h2>QR Code Generator</h2>
+                        <p>Convert website links, text, or payment info into clean QR codes</p>
+                    </div>
+                </div>
+
+                <div class="field-group">
+                    <label>Enter Web Link or Text Content</label>
+                    <input type="text" id="qrTextInput" class="custom-input" placeholder="https://example.com or any text content...">
+                </div>
+
+                <div class="field-group">
+                    <label>Resolution Quality</label>
+                    <select id="qrResolution" class="custom-input select-field">
+                        <option value="350x350">350 x 350 px (Fast)</option>
+                        <option value="500x500" selected>500 x 500 px (HD Standard)</option>
+                        <option value="800x800">800 x 800 px (Ultra Sharp)</option>
+                    </select>
+                </div>
+
+                <button class="btn-glow-primary" onclick="createQrCode()">
+                    <i class="fa-solid fa-wand-magic-sparkles"></i> Generate QR Code
+                </button>
+
+                <div class="output-card" id="qrResultBox" style="text-align:center;">
+                    <div class="preview-img-wrap" style="background:#fff; padding:16px;">
+                        <img id="qrImageTarget" src="" alt="QR Code Result">
+                    </div>
+                    <a id="qrDownloadBtn" class="btn-glow-primary" style="text-decoration:none;" href="#" download="qrcode.png">
+                        <i class="fa-solid fa-arrow-down-to-bracket"></i> Download QR Image
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. QR SCANNER & DECODER -->
+        <section id="tabQrScan" class="app-panel">
+            <div class="glass-card">
+                <div class="card-header-block">
+                    <div class="header-icon-badge" style="background:rgba(245, 158, 11, 0.1); border-color:rgba(245, 158, 11, 0.25); color:#f59e0b;">
+                        <i class="fa-solid fa-camera-rotate"></i>
+                    </div>
+                    <div>
+                        <h2>QR Code Decoder</h2>
+                        <p>Extract links and raw information from QR photos or live camera</p>
+                    </div>
+                </div>
+
+                <div class="upload-field" onclick="document.getElementById('qrFileInput').click()">
+                    <div class="upload-icon-anim" style="color:#f59e0b;">
+                        <i class="fa-regular fa-file-image"></i>
+                    </div>
+                    <h3 id="qrFileLabel">Select QR Image from Storage</h3>
+                    <p>Instant file extraction</p>
+                </div>
+                <input type="file" id="qrFileInput" accept="image/*" style="display:none;" onchange="decodeFileQr(this)">
+
+                <div class="divider-label">
+                    <span>or scan with camera</span>
+                </div>
+
+                <button class="btn-glow-primary" id="btnToggleCam" onclick="toggleCameraReader()" style="background:linear-gradient(135deg, #0284c7, #0369a1); box-shadow:0 10px 25px rgba(2, 132, 199, 0.35);">
+                    <i class="fa-solid fa-camera"></i> Open Camera Scanner
+                </button>
+
+                <div id="qrReaderBox"></div>
+
+                <div class="output-card" id="scanResultBox">
+                    <div class="field-group" style="margin-bottom:12px;">
+                        <label>Decoded Link / Text</label>
+                        <div class="input-inline-copy">
+                            <input type="text" id="scanTextOutput" class="copy-url-field" readonly>
+                            <button class="btn-action-icon" onclick="copyToClipboard('scanTextOutput')">
+                                <i class="fa-regular fa-clone"></i> Copy
+                            </button>
+                        </div>
+                    </div>
+                    <div id="scanLinkWrap" style="display:none;">
+                        <a id="scanLinkRedirect" href="#" target="_blank" class="btn-glow-primary" style="background:linear-gradient(135deg, #10b981, #059669); text-decoration:none; box-shadow:0 10px 25px rgba(16, 185, 129, 0.35);">
+                            <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Link in Browser
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. DEVELOPER PROFILE -->
+        <section id="tabAbout" class="app-panel">
+            <div class="glass-card">
+                <div class="profile-hero">
+                    <div class="avatar-frame-wrap">
+                        <div class="avatar-glow-ring">
+                            <div class="avatar-content">
+                                <i class="fa-solid fa-code"></i>
+                            </div>
+                        </div>
+                        <div class="verified-badge-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                    </div>
+
+                    <h2>Mozahid</h2>
+                    <div class="role-pill">
+                        <i class="fa-solid fa-shield"></i> Age: 15 • Full-Stack Developer
+                    </div>
+
+                    <p class="profile-bio">
+                        Passionate about crafting fast, modern, and high-performance web applications. Focused on dark UI aesthetics, smooth animations, and clean API integration.
+                    </p>
+
+                    <div class="stat-grid-wrap">
+                        <div class="stat-box">
+                            <h4>15</h4>
+                            <span>Years Old</span>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Fast</h4>
+                            <span>Architecture</span>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Clean</h4>
+                            <span>Codebase</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FLOATING TOAST -->
+    <div id="notificationToast">
+        <i class="fa-solid fa-circle-check"></i>
+        <span id="toastMsg">Action Successful</span>
+    </div>
+
+    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <script>
+        // Dedicated ImgBB API Key
+        const IMGBB_KEY = "8104f8ac745d8dc4621b9d758844b418";
+
+        let pendingImage = null;
+        let qrScannerInstance = null;
+        let isCamActive = false;
+
+        /* ----------------------------------------------------
+           1. SMOOTH BACKGROUND CANVAS PARTICLES
+        ---------------------------------------------------- */
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+        let width = canvas.width = window.innerWidth;
+        let height = canvas.height = window.innerHeight;
+
+        window.addEventListener('resize', () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        });
+
+        const particles = [];
+        const count = 35;
+
+        for (let i = 0; i < count; i++) {
+            particles.push({
+                x: Math.random() * width,
+                y: Math.random() * height,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                size: Math.random() * 2 + 1,
+                alpha: Math.random() * 0.4 + 0.1
+            });
+        }
+
+        function drawScene() {
+            ctx.clearRect(0, 0, width, height);
+
+            particles.forEach(p => {
+                p.x += p.vx;
+                p.y += p.vy;
+
+                if (p.x < 0) p.x = width;
+                if (p.x > width) p.x = 0;
+                if (p.y < 0) p.y = height;
+                if (p.y > height) p.y = 0;
+
+                ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.4})`;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                ctx.fill();
+            });
+
+            requestAnimationFrame(drawScene);
+        }
+        drawScene();
+
+        /* ----------------------------------------------------
+           2. INTRO LOADER TIMING
+        ---------------------------------------------------- */
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const intro = document.getElementById('introScreen');
+                intro.style.opacity = '0';
+                setTimeout(() => intro.style.display = 'none', 700);
+            }, 2100);
+        });
+
+        /* ----------------------------------------------------
+           3. SLIDE DRAWER & NAVIGATION
+        ---------------------------------------------------- */
+        function toggleDrawer() {
+            const drawer = document.getElementById('drawerNav');
+            const backdrop = document.getElementById('drawerBackdrop');
+            drawer.classList.toggle('open');
+            backdrop.classList.toggle('open');
+        }
+
+        function switchSection(panelId, element) {
+            document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+
+            const target = document.getElementById(panelId);
+            target.classList.add('active');
+            element.classList.add('active');
+
+            toggleDrawer();
+
+            if (panelId !== 'tabQrScan' && isCamActive) {
+                stopCameraReader();
+            }
+        }
+
+        /* ----------------------------------------------------
+           4. TOAST NOTIFICATIONS & CLIPBOARD
+        ---------------------------------------------------- */
+        function fireToast(text) {
+            const toast = document.getElementById('notificationToast');
+            const toastMsg = document.getElementById('toastMsg');
+            toastMsg.innerText = text;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 2600);
+        }
+
+        function copyToClipboard(inputId) {
+            const el = document.getElementById(inputId);
+            el.select();
+            el.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(el.value).then(() => {
+                fireToast("Copied to Clipboard");
+            }).catch(() => {
+                document.execCommand('copy');
+                fireToast("Copied to Clipboard");
+            });
+        }
+
+        /* ----------------------------------------------------
+           5. IMGBB IMAGE UPLOADER
+        ---------------------------------------------------- */
+        function handleFileChoose(input) {
+            if (input.files && input.files[0]) {
+                pendingImage = input.files[0];
+                document.getElementById('uploadPromptText').innerText = pendingImage.name;
+                document.getElementById('btnUploadImage').disabled = false;
+            }
+        }
+
+        const dropArea = document.getElementById('dropArea');
+        ['dragenter', 'dragover'].forEach(name => {
+            dropArea.addEventListener(name, (e) => {
+                e.preventDefault();
+                dropArea.classList.add('drag-active');
+            });
+        });
+        ['dragleave', 'drop'].forEach(name => {
+            dropArea.addEventListener(name, (e) => {
+                e.preventDefault();
+                dropArea.classList.remove('drag-active');
+            });
+        });
+        dropArea.addEventListener('drop', (e) => {
+            if (e.dataTransfer.files && e.dataTransfer.files[0]) {
+                pendingImage = e.dataTransfer.files[0];
+                document.getElementById('uploadPromptText').innerText = pendingImage.name;
+                document.getElementById('btnUploadImage').disabled = false;
+            }
+        });
+
+        async function executeImageUpload() {
+            if (!pendingImage) return;
+
+            const btn = document.getElementById('btnUploadImage');
+            const resultBox = document.getElementById('imgResultBox');
+            const targetImg = document.getElementById('previewImgTarget');
+            const outputUrl = document.getElementById('imgUrlOutput');
+
+            btn.disabled = true;
+            btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
+
+            const form = new FormData();
+            form.append('image', pendingImage);
+
+            try {
+                const res = await fetch(`https://api.imgbb.com/1/upload?key=${IMGBB_KEY}`, {
+                    method: 'POST',
+                    body: form
+                });
+                const response = await res.json();
+
+                if (response.success) {
+                    const finalUrl = response.data.url;
+                    document.getElementById('imgPreviewTarget').src = finalUrl;
+                    outputUrl.value = finalUrl;
+                    resultBox.style.display = 'block';
+                    fireToast("Direct URL Generated");
+                } else {
+                    alert("Upload error: " + (response.error ? response.error.message : "Service busy"));
+                }
+            } catch (err) {
+                alert("Connection failed: " + err.message);
+            } finally {
+                btn.disabled = false;
+                btn.innerHTML = `<i class="fa-solid fa-bolt"></i> Generate Direct Link`;
+            }
+        }
+
+        /* ----------------------------------------------------
+           6. QR CODE CREATION
+        ---------------------------------------------------- */
+        function createQrCode() {
+            const content = document.getElementById('qrTextInput').value.trim();
+            const dimensions = document.getElementById('qrResolution').value;
+            const resultBox = document.getElementById('qrResultBox');
+            const targetImg = document.getElementById('qrImageTarget');
+            const downloadBtn = document.getElementById('qrDownloadBtn');
+
+            if (!content) {
+                alert("Please enter a link or message to encode.");
+                return;
+            }
+
+            const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${dimensions}&data=${encodeURIComponent(content)}&margin=12`;
+
+            targetImg.src = qrUrl;
+            downloadBtn.href = qrUrl;
+            resultBox.style.display = 'block';
+            fireToast("QR Code Created");
+        }
+
+        /* ----------------------------------------------------
+           7. QR DECODING (FILE & CAMERA)
+        ---------------------------------------------------- */
+        function decodeFileQr(input) {
+            if (!input.files || !input.files[0]) return;
+            const file = input.files[0];
+            document.getElementById('qrFileLabel').innerText = file.name;
+
+            const scanner = new Html5Qrcode("qrReaderBox");
+            scanner.scanFile(file, true)
+                .then(text => {
+                    presentScanOutput(text);
+                    document.getElementById('qrFileLabel').innerText = "QR Decoded Successfully";
+                })
+                .catch(() => {
+                    alert("Could not detect a clear QR pattern in this image.");
+                    document.getElementById('qrFileLabel').innerText = "Select QR Image from Storage";
+                });
+        }
+
+        function toggleCameraReader() {
+            if (isCamActive) {
+                stopCameraReader();
+            } else {
+                startCameraReader();
+            }
+        }
+
+        function startCameraReader() {
+            const box = document.getElementById('qrReaderBox');
+            const btn = document.getElementById('btnToggleCam');
+
+            box.style.display = 'block';
+            qrScannerInstance = new Html5Qrcode("qrReaderBox");
+
+            qrScannerInstance.start(
+                { facingMode: "environment" },
+                { fps: 12, qrbox: { width: 240, height: 240 } },
+                (decodedText) => {
+                    presentScanOutput(decodedText);
+                    stopCameraReader();
+                },
+                () => {}
+            ).then(() => {
+                isCamActive = true;
+                btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
+                btn.innerHTML = `<i class="fa-solid fa-stop"></i> Close Camera`;
+            }).catch(err => {
+                alert("Unable to access camera: " + err);
+                box.style.display = 'none';
+            });
+        }
+
+        function stopCameraReader() {
+            if (qrScannerInstance && isCamActive) {
+                qrScannerInstance.stop().then(() => {
+                    document.getElementById('qrReaderBox').style.display = 'none';
+                    const btn = document.getElementById('btnToggleCam');
+                    btn.style.background = 'linear-gradient(135deg, #0284c7, #0369a1)';
+                    btn.innerHTML = `<i class="fa-solid fa-camera"></i> Open Camera Scanner`;
+                    isCamActive = false;
+                });
+            }
+        }
+
+        function presentScanOutput(decodedText) {
+            const resultBox = document.getElementById('scanResultBox');
+            const output = document.getElementById('scanTextOutput');
+            const linkWrap = document.getElementById('scanLinkWrap');
+            const redirectBtn = document.getElementById('scanLinkRedirect');
+
+            output.value = decodedText;
+            resultBox.style.display = 'block';
+
+            if (decodedText.startsWith('http://') || decodedText.startsWith('https://')) {
+                linkWrap.style.display = 'block';
+                redirectBtn.href = decodedText;
+            } else {
+                linkWrap.style.display = 'none';
+            }
+
+            fireToast("Data Extracted");
+        }
+    </script>
+</body>
+              </html>
