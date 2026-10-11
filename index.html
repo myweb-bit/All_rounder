@@ -3,7 +3,31 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>NEXUS TOOLS | Ultra Hub by Mozahid</title>
+    
+    <!-- ================= FAVICON & APP ICONS ================= -->
+    <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="icon.png">
+    <link rel="shortcut icon" href="icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="icon.png">
+
+    <!-- ================= SEO PRIMARY META TAGS ================= -->
+    <title>NEXUS TOOLS | Free Image to Link, QR Code Generator & Scanner Online</title>
+    <meta name="title" content="NEXUS TOOLS | Free Image to Link, QR Code Generator & Scanner Online">
+    <meta name="description" content="NEXUS TOOLS: Best free multi-utility toolkit. Convert images to direct URLs, generate high-resolution QR codes, and scan/decode QR codes online instantly.">
+    <meta name="keywords" content="image to link, photo ka link kaise banaye, free image hosting, imgbb direct link generator, online qr code generator, qr scanner online, qr code decoder">
+    <meta name="author" content="Mozahid">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#05070c">
+
+    <!-- ================= OPEN GRAPH & TWITTER ================= -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="NEXUS TOOLS | Free Image to Link, QR Generator & Scanner">
+    <meta property="og:description" content="Generate direct image URLs instantly, create custom high-res QR codes, and scan QR codes with live camera.">
+    <meta property="og:image" content="icon.png">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="NEXUS TOOLS - Fast Image to URL & QR Hub">
+    <meta name="twitter:description" content="Convert images to links, generate QR codes, and scan QR online.">
+    <meta name="twitter:image" content="icon.png">
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,7 +48,6 @@
             --accent-primary: #ff2a5f;
             --accent-primary-hover: #ff4777;
             --accent-secondary: #00f2fe;
-            --accent-cyan-rgb: 0, 242, 254;
             --accent-glow: rgba(255, 42, 95, 0.35);
             --border-glass: rgba(255, 255, 255, 0.08);
             --border-glass-hover: rgba(255, 255, 255, 0.18);
@@ -53,7 +76,6 @@
             position: relative;
         }
 
-        /* Interactive Dynamic Background Canvas */
         #bgCanvas {
             position: fixed;
             top: 0;
@@ -64,7 +86,6 @@
             pointer-events: none;
         }
 
-        /* Subtle mesh overlay */
         .mesh-gradient {
             position: fixed;
             inset: 0;
@@ -97,17 +118,24 @@
         }
 
         .intro-logo-glow {
-            width: 72px;
-            height: 72px;
-            border-radius: 20px;
-            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            width: 82px;
+            height: 82px;
+            border-radius: 22px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             display: grid;
             place-items: center;
-            font-size: 2rem;
-            color: #fff;
-            margin-bottom: 24px;
-            box-shadow: 0 0 50px var(--accent-glow);
+            margin-bottom: 22px;
+            box-shadow: 0 0 45px var(--accent-glow);
             animation: introIconPop 1s var(--ease-out-back) forwards;
+            padding: 12px;
+        }
+
+        .intro-logo-glow img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(255, 42, 95, 0.5));
         }
 
         .intro-title {
@@ -210,11 +238,19 @@
         .menu-btn:hover {
             background: rgba(255, 255, 255, 0.08);
             border-color: var(--border-glass-hover);
-            transform: scale(1.03);
         }
 
-        .menu-btn:active {
-            transform: scale(0.96);
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-logo-img {
+            width: 28px;
+            height: 28px;
+            object-fit: contain;
+            border-radius: 6px;
         }
 
         .logo-text {
@@ -223,9 +259,6 @@
             font-weight: 800;
             letter-spacing: -0.3px;
             color: #fff;
-            display: flex;
-            align-items: center;
-            gap: 6px;
         }
 
         .logo-text span {
@@ -265,23 +298,19 @@
             50% { transform: scale(1.3); opacity: 0.6; }
         }
 
-        /* ================= SLIDE NAVIGATION DRAWER ================= */
+        /* ================= DRAWER ================= */
         .drawer-backdrop {
             position: fixed;
             inset: 0;
             background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.35s var(--ease-smooth), visibility 0.35s;
         }
 
-        .drawer-backdrop.open {
-            opacity: 1;
-            visibility: visible;
-        }
+        .drawer-backdrop.open { opacity: 1; visibility: visible; }
 
         .drawer-nav {
             position: fixed;
@@ -291,19 +320,15 @@
             height: 100%;
             background: rgba(9, 12, 20, 0.95);
             backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
             border-right: var(--border-glass);
             z-index: 10001;
-            box-shadow: 20px 0 50px rgba(0, 0, 0, 0.7);
             transition: transform 0.4s var(--ease-smooth);
             display: flex;
             flex-direction: column;
             padding: 24px 20px;
         }
 
-        .drawer-nav.open {
-            transform: translateX(330px);
-        }
+        .drawer-nav.open { transform: translateX(330px); }
 
         .drawer-header {
             display: flex;
@@ -314,11 +339,7 @@
             margin-bottom: 24px;
         }
 
-        .drawer-header h3 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 700;
-        }
+        .drawer-header h3 { font-family: 'Syne', sans-serif; font-size: 1.15rem; font-weight: 700; }
 
         .close-drawer-btn {
             background: transparent;
@@ -326,17 +347,6 @@
             color: var(--text-dim);
             font-size: 1.2rem;
             cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 8px;
-            display: grid;
-            place-items: center;
-            transition: all 0.2s;
-        }
-
-        .close-drawer-btn:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .nav-links-wrap {
@@ -355,52 +365,18 @@
             color: var(--text-dim);
             font-size: 0.9rem;
             font-weight: 600;
-            text-decoration: none;
             cursor: pointer;
             transition: all 0.25s var(--ease-smooth);
             border: 1px solid transparent;
-            position: relative;
         }
 
-        .nav-item i {
-            font-size: 1.1rem;
-            width: 22px;
-            text-align: center;
-            transition: transform 0.25s var(--ease-smooth);
-        }
-
-        .nav-item:hover {
-            color: #fff;
-            background: rgba(255, 255, 255, 0.03);
-            border-color: rgba(255, 255, 255, 0.05);
-            transform: translateX(4px);
-        }
-
-        .nav-item:hover i {
-            transform: scale(1.15);
-        }
-
+        .nav-item:hover { color: #fff; background: rgba(255, 255, 255, 0.03); }
         .nav-item.active {
             color: #fff;
             background: linear-gradient(135deg, rgba(255, 42, 95, 0.15), rgba(255, 42, 95, 0.03));
             border-color: rgba(255, 42, 95, 0.35);
         }
-
-        .nav-item.active i {
-            color: var(--accent-primary);
-        }
-
-        .nav-item.active::before {
-            content: '';
-            position: absolute;
-            left: 0;
-            top: 25%;
-            height: 50%;
-            width: 3px;
-            background: var(--accent-primary);
-            border-radius: 0 4px 4px 0;
-            box-shadow: 0 0 10px var(--accent-primary);
-        }
+        .nav-item.active i { color: var(--accent-primary); }
 
         .drawer-footer-card {
             background: rgba(255, 255, 255, 0.02);
@@ -409,19 +385,10 @@
             padding: 16px;
             text-align: center;
         }
+        .drawer-footer-card p { font-size: 0.75rem; color: var(--text-dim); margin-bottom: 4px; }
+        .drawer-footer-card strong { font-size: 0.85rem; color: #fff; }
 
-        .drawer-footer-card p {
-            font-size: 0.75rem;
-            color: var(--text-dim);
-            margin-bottom: 4px;
-        }
-
-        .drawer-footer-card strong {
-            font-size: 0.85rem;
-            color: #fff;
-        }
-
-        /* ================= MAIN CONTAINER & TABS ================= */
+        /* ================= MAIN CONTAINER ================= */
         main {
             max-width: 860px;
             margin: 0 auto;
@@ -443,32 +410,13 @@
             transform: translateY(0);
         }
 
-        /* Premium Glass Card */
         .glass-card {
             background: var(--bg-card);
             backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
             border: var(--border-glass);
             border-radius: var(--radius-outer);
             padding: 32px 28px;
             box-shadow: 0 25px 60px rgba(0, 0, 0, 0.45);
-            position: relative;
-            overflow: hidden;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .glass-card:hover {
-            border-color: var(--border-glass-hover);
-        }
-
-        .glass-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
         }
 
         .card-header-block {
@@ -501,12 +449,8 @@
             margin-bottom: 2px;
         }
 
-        .card-header-block p {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
+        .card-header-block p { font-size: 0.8rem; color: var(--text-dim); }
 
-        /* ================= UPLOAD ZONE (IMGBB) ================= */
         .upload-field {
             border: 2px dashed rgba(255, 255, 255, 0.12);
             background: rgba(255, 255, 255, 0.015);
@@ -515,15 +459,12 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s var(--ease-smooth);
-            position: relative;
-            overflow: hidden;
         }
 
         .upload-field:hover, .upload-field.drag-active {
             border-color: var(--accent-secondary);
             background: rgba(0, 242, 254, 0.03);
             box-shadow: 0 0 30px rgba(0, 242, 254, 0.12);
-            transform: translateY(-2px);
         }
 
         .upload-icon-anim {
@@ -537,25 +478,11 @@
             font-size: 1.5rem;
             color: var(--accent-secondary);
             margin: 0 auto 16px;
-            transition: transform 0.3s var(--ease-out-back);
         }
 
-        .upload-field:hover .upload-icon-anim {
-            transform: translateY(-4px) scale(1.1);
-        }
+        .upload-field h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 6px; }
+        .upload-field p { font-size: 0.8rem; color: var(--text-dim); }
 
-        .upload-field h3 {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 6px;
-        }
-
-        .upload-field p {
-            font-size: 0.8rem;
-            color: var(--text-dim);
-        }
-
-        /* Primary Action Buttons */
         .btn-glow-primary {
             background: linear-gradient(135deg, var(--accent-primary), #d91b49);
             border: none;
@@ -573,39 +500,10 @@
             margin-top: 20px;
             box-shadow: 0 10px 25px var(--accent-glow);
             transition: all 0.3s var(--ease-smooth);
-            position: relative;
-            overflow: hidden;
         }
 
-        .btn-glow-primary::after {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s ease;
-        }
+        .btn-glow-primary:disabled { opacity: 0.45; cursor: not-allowed; }
 
-        .btn-glow-primary:hover:not(:disabled)::after {
-            transform: translateX(100%);
-        }
-
-        .btn-glow-primary:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 14px 32px rgba(255, 42, 95, 0.5);
-        }
-
-        .btn-glow-primary:active:not(:disabled) {
-            transform: translateY(0);
-        }
-
-        .btn-glow-primary:disabled {
-            opacity: 0.45;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        /* Result Cards */
         .output-card {
             margin-top: 24px;
             background: rgba(18, 24, 40, 0.6);
@@ -613,12 +511,6 @@
             border-radius: var(--radius-inner);
             padding: 20px;
             display: none;
-            animation: cardAppear 0.4s var(--ease-smooth) forwards;
-        }
-
-        @keyframes cardAppear {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         .preview-img-wrap {
@@ -634,17 +526,9 @@
             border: var(--border-glass);
         }
 
-        .preview-img-wrap img {
-            max-width: 100%;
-            max-height: 280px;
-            object-fit: contain;
-        }
+        .preview-img-wrap img { max-width: 100%; max-height: 280px; object-fit: contain; }
 
-        .input-inline-copy {
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+        .input-inline-copy { display: flex; gap: 10px; align-items: center; }
 
         .copy-url-field {
             flex: 1;
@@ -656,11 +540,6 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .copy-url-field:focus {
-            border-color: var(--accent-secondary);
         }
 
         .btn-action-icon {
@@ -675,21 +554,10 @@
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: all 0.2s;
             white-space: nowrap;
         }
 
-        .btn-action-icon:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: rgba(255, 255, 255, 0.2);
-            color: var(--accent-secondary);
-        }
-
-        /* ================= INPUT ELEMENTS ================= */
-        .field-group {
-            margin-bottom: 20px;
-        }
-
+        .field-group { margin-bottom: 20px; }
         .field-group label {
             display: block;
             font-size: 0.76rem;
@@ -709,25 +577,8 @@
             border-radius: var(--radius-inner);
             font-size: 0.95rem;
             outline: none;
-            transition: all 0.25s ease;
         }
 
-        .custom-input:focus {
-            border-color: var(--accent-secondary);
-            background: rgba(24, 32, 54, 0.9);
-            box-shadow: 0 0 20px rgba(0, 242, 254, 0.15);
-        }
-
-        .select-field {
-            appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%2394a3b8%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat;
-            background-position: right 18px top 50%;
-            background-size: 11px auto;
-            padding-right: 44px;
-        }
-
-        /* ================= QR SCANNER & LIVE SCAN ================= */
         #qrReaderBox {
             width: 100%;
             border-radius: var(--radius-inner);
@@ -743,7 +594,6 @@
             margin: 22px 0;
             position: relative;
         }
-
         .divider-label::before {
             content: '';
             position: absolute;
@@ -752,36 +602,21 @@
             right: 0;
             height: 1px;
             background: var(--border-glass);
-            z-index: 0;
         }
-
         .divider-label span {
             position: relative;
-            z-index: 1;
             background: #0c101b;
             padding: 4px 16px;
             font-size: 0.72rem;
             color: var(--text-sub);
             font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
             border-radius: 20px;
         }
 
-        /* ================= ABOUT / PROFILE CARD ================= */
-        .profile-hero {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            padding: 10px 0;
-        }
-
-        .avatar-frame-wrap {
-            position: relative;
-            margin-bottom: 20px;
-        }
-
+        /* Profile */
+        .profile-hero { display: flex; flex-direction: column; align-items: center; text-align: center; }
+        .avatar-frame-wrap { position: relative; margin-bottom: 20px; }
         .avatar-glow-ring {
             width: 110px;
             height: 110px;
@@ -790,7 +625,6 @@
             padding: 3px;
             box-shadow: 0 0 35px var(--accent-glow);
         }
-
         .avatar-content {
             width: 100%;
             height: 100%;
@@ -798,33 +632,11 @@
             background: #090c16;
             display: grid;
             place-items: center;
-            font-size: 2.6rem;
-            color: #fff;
+            overflow: hidden;
+            padding: 10px;
         }
-
-        .verified-badge-icon {
-            position: absolute;
-            bottom: 4px;
-            right: 4px;
-            width: 28px;
-            height: 28px;
-            background: #2563eb;
-            border: 2px solid #090c16;
-            border-radius: 50%;
-            display: grid;
-            place-items: center;
-            font-size: 0.8rem;
-            color: #fff;
-        }
-
-        .profile-hero h2 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.85rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-            margin-bottom: 4px;
-        }
-
+        .avatar-content img { width: 100%; height: 100%; object-fit: contain; }
+        .profile-hero h2 { font-family: 'Syne', sans-serif; font-size: 1.85rem; font-weight: 800; margin-bottom: 4px; }
         .role-pill {
             font-size: 0.75rem;
             font-weight: 700;
@@ -834,66 +646,26 @@
             padding: 5px 16px;
             border-radius: 30px;
             margin-bottom: 18px;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
         }
-
-        .profile-bio {
-            font-size: 0.95rem;
-            line-height: 1.65;
-            color: var(--text-dim);
-            max-width: 580px;
-            margin-bottom: 28px;
-        }
-
-        .stat-grid-wrap {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 14px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
+        .profile-bio { font-size: 0.95rem; line-height: 1.65; color: var(--text-dim); max-width: 580px; margin-bottom: 28px; }
+        .stat-grid-wrap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; width: 100%; }
         .stat-box {
             background: rgba(255, 255, 255, 0.02);
             border: var(--border-glass);
             border-radius: var(--radius-inner);
             padding: 20px 10px;
             text-align: center;
-            transition: all 0.25s ease;
         }
+        .stat-box h4 { font-family: 'Syne', sans-serif; font-size: 1.45rem; font-weight: 800; margin-bottom: 4px; }
+        .stat-box span { font-size: 0.72rem; color: var(--text-sub); font-weight: 700; text-transform: uppercase; }
 
-        .stat-box:hover {
-            background: rgba(255, 255, 255, 0.04);
-            border-color: var(--border-glass-hover);
-            transform: translateY(-3px);
-        }
-
-        .stat-box h4 {
-            font-family: 'Syne', sans-serif;
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: #fff;
-            margin-bottom: 4px;
-        }
-
-        .stat-box span {
-            font-size: 0.72rem;
-            color: var(--text-sub);
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
-
-        /* ================= FLOATING TOAST ================= */
+        /* Toast */
         #notificationToast {
             position: fixed;
             bottom: 30px;
             right: 30px;
             background: rgba(13, 18, 30, 0.95);
             backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(0, 242, 254, 0.4);
             color: #fff;
             padding: 14px 22px;
@@ -903,60 +675,34 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
             transform: translateY(100px);
             opacity: 0;
             transition: all 0.35s var(--ease-out-back);
             z-index: 1000000;
-            pointer-events: none;
         }
+        #notificationToast.show { transform: translateY(0); opacity: 1; }
 
-        #notificationToast.show {
-            transform: translateY(0);
-            opacity: 1;
-        }
-
-        #notificationToast i {
-            color: var(--accent-secondary);
-        }
-
-        /* Responsive Breakpoints */
         @media (max-width: 640px) {
-            .glass-card {
-                padding: 24px 18px;
-            }
-            .stat-grid-wrap {
-                grid-template-columns: 1fr;
-            }
-            .input-inline-copy {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .btn-action-icon {
-                justify-content: center;
-            }
-            #notificationToast {
-                bottom: 20px;
-                right: 20px;
-                left: 20px;
-                justify-content: center;
-            }
+            .glass-card { padding: 24px 18px; }
+            .stat-grid-wrap { grid-template-columns: 1fr; }
+            .input-inline-copy { flex-direction: column; align-items: stretch; }
+            #notificationToast { bottom: 20px; right: 20px; left: 20px; justify-content: center; }
         }
     </style>
 </head>
 <body>
 
-    <!-- Particle / Glow Canvas -->
     <canvas id="bgCanvas"></canvas>
     <div class="mesh-gradient"></div>
 
     <!-- ================= INTRO CURTAIN SCREEN ================= -->
     <div id="introScreen">
         <div class="intro-container">
+            <!-- App Logo from icon.png -->
             <div class="intro-logo-glow">
-                <i class="fa-solid fa-layer-group"></i>
+                <img src="icon.png" alt="Nexus Tools Logo">
             </div>
-            <h1 class="intro-title">NEXUS<span>HUB</span></h1>
+            <div class="intro-title">NEXUS<span>HUB</span></div>
             <div class="intro-badge">Engineered by Mozahid</div>
             <div class="intro-progress-bar">
                 <div class="intro-progress-fill"></div>
@@ -967,11 +713,12 @@
     <!-- ================= HEADER ================= -->
     <header>
         <div class="brand-section">
-            <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Menu">
+            <button class="menu-btn" onclick="toggleDrawer()" aria-label="Open Navigation Menu">
                 <i class="fa-solid fa-bars-staggered"></i>
             </button>
-            <div class="logo-text">
-                NEXUS<span>HUB</span>
+            <div class="logo-wrap">
+                <img src="icon.png" alt="Logo" class="header-logo-img">
+                <div class="logo-text">NEXUS<span>HUB</span></div>
             </div>
         </div>
         <div class="header-meta">
@@ -1020,7 +767,7 @@
     <!-- ================= MAIN CONTENT ================= -->
     <main>
 
-        <!-- 1. IMAGE TO LINK (IMGBB) -->
+        <!-- 1. IMAGE TO LINK -->
         <section id="tabImgbb" class="app-panel active">
             <div class="glass-card">
                 <div class="card-header-block">
@@ -1048,10 +795,10 @@
 
                 <div class="output-card" id="imgResultBox">
                     <div class="preview-img-wrap">
-                        <img id="imgPreviewTarget" src="" alt="Upload Preview">
+                        <img id="imgPreviewTarget" src="" alt="Direct Upload Image Preview">
                     </div>
                     <div class="field-group" style="margin-bottom:0;">
-                        <label>Generated Image URL</label>
+                        <label for="imgUrlOutput">Generated Image URL</label>
                         <div class="input-inline-copy">
                             <input type="text" id="imgUrlOutput" class="copy-url-field" readonly>
                             <button class="btn-action-icon" onclick="copyToClipboard('imgUrlOutput')">
@@ -1072,18 +819,18 @@
                     </div>
                     <div>
                         <h2>QR Code Generator</h2>
-                        <p>Convert website links, text, or payment info into clean QR codes</p>
+                        <p>Convert website links or text into clean, high-resolution QR codes</p>
                     </div>
                 </div>
 
                 <div class="field-group">
-                    <label>Enter Web Link or Text Content</label>
+                    <label for="qrTextInput">Enter Web Link or Text Content</label>
                     <input type="text" id="qrTextInput" class="custom-input" placeholder="https://example.com or any text content...">
                 </div>
 
                 <div class="field-group">
-                    <label>Resolution Quality</label>
-                    <select id="qrResolution" class="custom-input select-field">
+                    <label for="qrResolution">Resolution Quality</label>
+                    <select id="qrResolution" class="custom-input" style="background:var(--bg-input);">
                         <option value="350x350">350 x 350 px (Fast)</option>
                         <option value="500x500" selected>500 x 500 px (HD Standard)</option>
                         <option value="800x800">800 x 800 px (Ultra Sharp)</option>
@@ -1096,7 +843,7 @@
 
                 <div class="output-card" id="qrResultBox" style="text-align:center;">
                     <div class="preview-img-wrap" style="background:#fff; padding:16px;">
-                        <img id="qrImageTarget" src="" alt="QR Code Result">
+                        <img id="qrImageTarget" src="" alt="Custom Generated QR Code PNG">
                     </div>
                     <a id="qrDownloadBtn" class="btn-glow-primary" style="text-decoration:none;" href="#" download="qrcode.png">
                         <i class="fa-solid fa-arrow-down-to-bracket"></i> Download QR Image
@@ -1113,8 +860,8 @@
                         <i class="fa-solid fa-camera-rotate"></i>
                     </div>
                     <div>
-                        <h2>QR Code Decoder</h2>
-                        <p>Extract links and raw information from QR photos or live camera</p>
+                        <h2>QR Code Decoder & Scanner</h2>
+                        <p>Extract links and raw information from QR photos or live mobile camera</p>
                     </div>
                 </div>
 
@@ -1123,7 +870,7 @@
                         <i class="fa-regular fa-file-image"></i>
                     </div>
                     <h3 id="qrFileLabel">Select QR Image from Storage</h3>
-                    <p>Instant file extraction</p>
+                    <p>Instant file extraction from gallery</p>
                 </div>
                 <input type="file" id="qrFileInput" accept="image/*" style="display:none;" onchange="decodeFileQr(this)">
 
@@ -1131,7 +878,7 @@
                     <span>or scan with camera</span>
                 </div>
 
-                <button class="btn-glow-primary" id="btnToggleCam" onclick="toggleCameraReader()" style="background:linear-gradient(135deg, #0284c7, #0369a1); box-shadow:0 10px 25px rgba(2, 132, 199, 0.35);">
+                <button class="btn-glow-primary" id="btnToggleCam" onclick="toggleCameraReader()" style="background:linear-gradient(135deg, #0284c7, #0369a1);">
                     <i class="fa-solid fa-camera"></i> Open Camera Scanner
                 </button>
 
@@ -1139,7 +886,7 @@
 
                 <div class="output-card" id="scanResultBox">
                     <div class="field-group" style="margin-bottom:12px;">
-                        <label>Decoded Link / Text</label>
+                        <label for="scanTextOutput">Decoded Link / Text</label>
                         <div class="input-inline-copy">
                             <input type="text" id="scanTextOutput" class="copy-url-field" readonly>
                             <button class="btn-action-icon" onclick="copyToClipboard('scanTextOutput')">
@@ -1148,7 +895,7 @@
                         </div>
                     </div>
                     <div id="scanLinkWrap" style="display:none;">
-                        <a id="scanLinkRedirect" href="#" target="_blank" class="btn-glow-primary" style="background:linear-gradient(135deg, #10b981, #059669); text-decoration:none; box-shadow:0 10px 25px rgba(16, 185, 129, 0.35);">
+                        <a id="scanLinkRedirect" href="#" target="_blank" rel="noopener noreferrer" class="btn-glow-primary" style="background:linear-gradient(135deg, #10b981, #059669); text-decoration:none;">
                             <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Link in Browser
                         </a>
                     </div>
@@ -1163,31 +910,28 @@
                     <div class="avatar-frame-wrap">
                         <div class="avatar-glow-ring">
                             <div class="avatar-content">
-                                <i class="fa-solid fa-code"></i>
+                                <img src="icon.png" alt="Mozahid Logo">
                             </div>
-                        </div>
-                        <div class="verified-badge-icon">
-                            <i class="fa-solid fa-check"></i>
                         </div>
                     </div>
 
                     <h2>Mozahid</h2>
                     <div class="role-pill">
-                        <i class="fa-solid fa-shield"></i> Age: 15 • Full-Stack Developer
+                        Full-Stack Developer
                     </div>
 
                     <p class="profile-bio">
-                        Passionate about crafting fast, modern, and high-performance web applications. Focused on dark UI aesthetics, smooth animations, and clean API integration.
+                        Passionate about crafting fast, modern, and high-performance web applications with dark UI aesthetics.
                     </p>
 
                     <div class="stat-grid-wrap">
                         <div class="stat-box">
-                            <h4>15</h4>
-                            <span>Years Old</span>
+                            <h4>Fast</h4>
+                            <span>Performance</span>
                         </div>
                         <div class="stat-box">
-                            <h4>Fast</h4>
-                            <span>Architecture</span>
+                            <h4>Ultra</h4>
+                            <span>Direct Link</span>
                         </div>
                         <div class="stat-box">
                             <h4>Clean</h4>
@@ -1206,18 +950,15 @@
         <span id="toastMsg">Action Successful</span>
     </div>
 
-    <!-- ================= JAVASCRIPT LOGIC ================= -->
+    <!-- JAVASCRIPT LOGIC -->
     <script>
-        // Dedicated ImgBB API Key
         const IMGBB_KEY = "8104f8ac745d8dc4621b9d758844b418";
 
         let pendingImage = null;
         let qrScannerInstance = null;
         let isCamActive = false;
 
-        /* ----------------------------------------------------
-           1. SMOOTH BACKGROUND CANVAS PARTICLES
-        ---------------------------------------------------- */
+        // Background Particles
         const canvas = document.getElementById('bgCanvas');
         const ctx = canvas.getContext('2d');
         let width = canvas.width = window.innerWidth;
@@ -1229,9 +970,7 @@
         });
 
         const particles = [];
-        const count = 35;
-
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < 35; i++) {
             particles.push({
                 x: Math.random() * width,
                 y: Math.random() * height,
@@ -1244,29 +983,23 @@
 
         function drawScene() {
             ctx.clearRect(0, 0, width, height);
-
             particles.forEach(p => {
                 p.x += p.vx;
                 p.y += p.vy;
-
                 if (p.x < 0) p.x = width;
                 if (p.x > width) p.x = 0;
                 if (p.y < 0) p.y = height;
                 if (p.y > height) p.y = 0;
-
                 ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha * 0.4})`;
                 ctx.beginPath();
                 ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                 ctx.fill();
             });
-
             requestAnimationFrame(drawScene);
         }
         drawScene();
 
-        /* ----------------------------------------------------
-           2. INTRO LOADER TIMING
-        ---------------------------------------------------- */
+        // Intro Loader Screen Dismiss
         window.addEventListener('DOMContentLoaded', () => {
             setTimeout(() => {
                 const intro = document.getElementById('introScreen');
@@ -1275,24 +1008,17 @@
             }, 2100);
         });
 
-        /* ----------------------------------------------------
-           3. SLIDE DRAWER & NAVIGATION
-        ---------------------------------------------------- */
+        // Navigation
         function toggleDrawer() {
-            const drawer = document.getElementById('drawerNav');
-            const backdrop = document.getElementById('drawerBackdrop');
-            drawer.classList.toggle('open');
-            backdrop.classList.toggle('open');
+            document.getElementById('drawerNav').classList.toggle('open');
+            document.getElementById('drawerBackdrop').classList.toggle('open');
         }
 
         function switchSection(panelId, element) {
             document.querySelectorAll('.app-panel').forEach(p => p.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-
-            const target = document.getElementById(panelId);
-            target.classList.add('active');
+            document.getElementById(panelId).classList.add('active');
             element.classList.add('active');
-
             toggleDrawer();
 
             if (panelId !== 'tabQrScan' && isCamActive) {
@@ -1300,13 +1026,9 @@
             }
         }
 
-        /* ----------------------------------------------------
-           4. TOAST NOTIFICATIONS & CLIPBOARD
-        ---------------------------------------------------- */
         function fireToast(text) {
             const toast = document.getElementById('notificationToast');
-            const toastMsg = document.getElementById('toastMsg');
-            toastMsg.innerText = text;
+            document.getElementById('toastMsg').innerText = text;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 2600);
         }
@@ -1314,7 +1036,6 @@
         function copyToClipboard(inputId) {
             const el = document.getElementById(inputId);
             el.select();
-            el.setSelectionRange(0, 99999);
             navigator.clipboard.writeText(el.value).then(() => {
                 fireToast("Copied to Clipboard");
             }).catch(() => {
@@ -1323,9 +1044,7 @@
             });
         }
 
-        /* ----------------------------------------------------
-           5. IMGBB IMAGE UPLOADER
-        ---------------------------------------------------- */
+        // Image to Link (ImgBB)
         function handleFileChoose(input) {
             if (input.files && input.files[0]) {
                 pendingImage = input.files[0];
@@ -1336,16 +1055,10 @@
 
         const dropArea = document.getElementById('dropArea');
         ['dragenter', 'dragover'].forEach(name => {
-            dropArea.addEventListener(name, (e) => {
-                e.preventDefault();
-                dropArea.classList.add('drag-active');
-            });
+            dropArea.addEventListener(name, (e) => { e.preventDefault(); dropArea.classList.add('drag-active'); });
         });
         ['dragleave', 'drop'].forEach(name => {
-            dropArea.addEventListener(name, (e) => {
-                e.preventDefault();
-                dropArea.classList.remove('drag-active');
-            });
+            dropArea.addEventListener(name, (e) => { e.preventDefault(); dropArea.classList.remove('drag-active'); });
         });
         dropArea.addEventListener('drop', (e) => {
             if (e.dataTransfer.files && e.dataTransfer.files[0]) {
@@ -1357,12 +1070,7 @@
 
         async function executeImageUpload() {
             if (!pendingImage) return;
-
             const btn = document.getElementById('btnUploadImage');
-            const resultBox = document.getElementById('imgResultBox');
-            const targetImg = document.getElementById('previewImgTarget');
-            const outputUrl = document.getElementById('imgUrlOutput');
-
             btn.disabled = true;
             btn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Processing...`;
 
@@ -1375,12 +1083,11 @@
                     body: form
                 });
                 const response = await res.json();
-
                 if (response.success) {
                     const finalUrl = response.data.url;
                     document.getElementById('imgPreviewTarget').src = finalUrl;
-                    outputUrl.value = finalUrl;
-                    resultBox.style.display = 'block';
+                    document.getElementById('imgUrlOutput').value = finalUrl;
+                    document.getElementById('imgResultBox').style.display = 'block';
                     fireToast("Direct URL Generated");
                 } else {
                     alert("Upload error: " + (response.error ? response.error.message : "Service busy"));
@@ -1393,37 +1100,26 @@
             }
         }
 
-        /* ----------------------------------------------------
-           6. QR CODE CREATION
-        ---------------------------------------------------- */
+        // QR Generator
         function createQrCode() {
             const content = document.getElementById('qrTextInput').value.trim();
             const dimensions = document.getElementById('qrResolution').value;
-            const resultBox = document.getElementById('qrResultBox');
-            const targetImg = document.getElementById('qrImageTarget');
-            const downloadBtn = document.getElementById('qrDownloadBtn');
-
             if (!content) {
                 alert("Please enter a link or message to encode.");
                 return;
             }
-
             const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=${dimensions}&data=${encodeURIComponent(content)}&margin=12`;
-
-            targetImg.src = qrUrl;
-            downloadBtn.href = qrUrl;
-            resultBox.style.display = 'block';
+            document.getElementById('qrImageTarget').src = qrUrl;
+            document.getElementById('qrDownloadBtn').href = qrUrl;
+            document.getElementById('qrResultBox').style.display = 'block';
             fireToast("QR Code Created");
         }
 
-        /* ----------------------------------------------------
-           7. QR DECODING (FILE & CAMERA)
-        ---------------------------------------------------- */
+        // QR Scanner
         function decodeFileQr(input) {
             if (!input.files || !input.files[0]) return;
             const file = input.files[0];
             document.getElementById('qrFileLabel').innerText = file.name;
-
             const scanner = new Html5Qrcode("qrReaderBox");
             scanner.scanFile(file, true)
                 .then(text => {
@@ -1437,17 +1133,13 @@
         }
 
         function toggleCameraReader() {
-            if (isCamActive) {
-                stopCameraReader();
-            } else {
-                startCameraReader();
-            }
+            if (isCamActive) stopCameraReader();
+            else startCameraReader();
         }
 
         function startCameraReader() {
             const box = document.getElementById('qrReaderBox');
             const btn = document.getElementById('btnToggleCam');
-
             box.style.display = 'block';
             qrScannerInstance = new Html5Qrcode("qrReaderBox");
 
@@ -1464,7 +1156,7 @@
                 btn.style.background = 'linear-gradient(135deg, #ef4444, #dc2626)';
                 btn.innerHTML = `<i class="fa-solid fa-stop"></i> Close Camera`;
             }).catch(err => {
-                alert("Unable to access camera: " + err);
+                alert("Camera access failed: " + err);
                 box.style.display = 'none';
             });
         }
@@ -1496,9 +1188,8 @@
             } else {
                 linkWrap.style.display = 'none';
             }
-
             fireToast("Data Extracted");
         }
     </script>
 </body>
-              </html>
+</html>
