@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     
+    <!-- ================= GOOGLE SEARCH CONSOLE VERIFICATION ================= -->
+    <meta name="google-site-verification" content="zRi5vpBjr8wXRUBHDN3bvwQfUwatiZ0j9KN1aAe0tC0" />
+
     <!-- ================= FAVICON & APP ICONS ================= -->
     <link rel="icon" type="image/png" sizes="32x32" href="icon.png">
     <link rel="icon" type="image/png" sizes="16x16" href="icon.png">
@@ -13,21 +16,91 @@
     <!-- ================= SEO PRIMARY META TAGS ================= -->
     <title>NEXUS TOOLS | Free Image to Link, QR Code Generator & Scanner Online</title>
     <meta name="title" content="NEXUS TOOLS | Free Image to Link, QR Code Generator & Scanner Online">
-    <meta name="description" content="NEXUS TOOLS: Best free multi-utility toolkit. Convert images to direct URLs, generate high-resolution QR codes, and scan/decode QR codes online instantly.">
-    <meta name="keywords" content="image to link, photo ka link kaise banaye, free image hosting, imgbb direct link generator, online qr code generator, qr scanner online, qr code decoder">
+    <meta name="description" content="NEXUS TOOLS: Best free multi-utility toolkit. Convert images to direct URLs (ImgBB direct link), generate high-resolution QR codes, and scan/decode QR codes online instantly via camera or image.">
+    <meta name="keywords" content="image to link, photo ka link kaise banaye, free image hosting, imgbb direct link generator, online qr code generator, custom qr code maker, qr scanner online, qr code decoder, scan qr from camera, image to url converter, nexus tools mozahid">
     <meta name="author" content="Mozahid">
-    <meta name="robots" content="index, follow">
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1">
     <meta name="theme-color" content="#05070c">
+    <link rel="canonical" href="https://yourwebsite.com/">
 
-    <!-- ================= OPEN GRAPH & TWITTER ================= -->
+    <!-- ================= OPEN GRAPH (FACEBOOK, WHATSAPP, LINKEDIN) ================= -->
     <meta property="og:type" content="website">
+    <meta property="og:url" content="https://yourwebsite.com/">
     <meta property="og:title" content="NEXUS TOOLS | Free Image to Link, QR Generator & Scanner">
-    <meta property="og:description" content="Generate direct image URLs instantly, create custom high-res QR codes, and scan QR codes with live camera.">
+    <meta property="og:description" content="Generate direct image URLs instantly, create custom high-res QR codes, and scan QR codes with live camera or gallery upload. 100% Free & Fast.">
     <meta property="og:image" content="icon.png">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:locale" content="hi_IN">
+    <meta property="og:site_name" content="NEXUS TOOLS">
+
+    <!-- ================= TWITTER CARD META TAGS ================= -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://yourwebsite.com/">
     <meta name="twitter:title" content="NEXUS TOOLS - Fast Image to URL & QR Hub">
-    <meta name="twitter:description" content="Convert images to links, generate QR codes, and scan QR online.">
+    <meta name="twitter:description" content="Convert images to links, generate high-definition QR codes, and scan QR codes online with camera or photos.">
     <meta name="twitter:image" content="icon.png">
+
+    <!-- ================= STRUCTURED DATA (JSON-LD SCHEMA) ================= -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "WebApplication",
+          "@id": "https://yourwebsite.com/#webapp",
+          "name": "NEXUS TOOLS",
+          "url": "https://yourwebsite.com/",
+          "applicationCategory": "UtilitiesApplication",
+          "operatingSystem": "All",
+          "browserRequirements": "Requires JavaScript. Requires HTML5.",
+          "author": {
+            "@type": "Person",
+            "name": "Mozahid"
+          },
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "INR"
+          },
+          "featureList": [
+            "Image to Direct Link Hosting",
+            "High Resolution QR Code Generator",
+            "Live Camera QR Code Scanner",
+            "Image File QR Code Decoder"
+          ]
+        },
+        {
+          "@type": "FAQPage",
+          "@id": "https://yourwebsite.com/#faq",
+          "mainEntity": [
+            {
+              "@type": "Question",
+              "name": "How to convert an image into a direct link?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Upload or drag-and-drop any PNG, JPG, or WEBP photo into the Image to Link tool in NEXUS TOOLS and click 'Generate Direct Link' to get a permanent URL."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "How can I generate and download high-resolution QR codes?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Navigate to the QR Generator tab, enter your link or text, choose your preferred resolution (up to 800x800 px Ultra Sharp), and click generate to download."
+              }
+            },
+            {
+              "@type": "Question",
+              "name": "Can I scan a QR code from my camera or an image file?",
+              "acceptedAnswer": {
+                "@type": "Answer",
+                "text": "Yes, NEXUS TOOLS allows you to decode QR codes directly from saved gallery images or live using your device's camera."
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -95,6 +168,19 @@
                 radial-gradient(circle at 50% 50%, rgba(5, 7, 12, 0.7) 0%, var(--bg-deep) 100%);
             z-index: 0;
             pointer-events: none;
+        }
+
+        /* Screen reader text for SEO */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
         }
 
         /* ================= INTRO CURTAIN ================= */
@@ -659,6 +745,31 @@
         .stat-box h4 { font-family: 'Syne', sans-serif; font-size: 1.45rem; font-weight: 800; margin-bottom: 4px; }
         .stat-box span { font-size: 0.72rem; color: var(--text-sub); font-weight: 700; text-transform: uppercase; }
 
+        /* SEO Footnote / Keyword Block */
+        .seo-footer-text {
+            margin-top: 40px;
+            padding: 24px 20px;
+            background: rgba(13, 17, 28, 0.45);
+            border-radius: var(--radius-inner);
+            border: var(--border-glass);
+            text-align: center;
+        }
+
+        .seo-footer-text h3 {
+            font-size: 0.95rem;
+            color: #fff;
+            margin-bottom: 8px;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .seo-footer-text p {
+            font-size: 0.78rem;
+            color: var(--text-dim);
+            line-height: 1.6;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
         /* Toast */
         #notificationToast {
             position: fixed;
@@ -695,10 +806,12 @@
     <canvas id="bgCanvas"></canvas>
     <div class="mesh-gradient"></div>
 
+    <!-- Hidden Semantic H1 for SEO Bots -->
+    <h1 class="sr-only">NEXUS TOOLS - Online Image to Link Generator, QR Code Maker, and Free QR Code Scanner by Mozahid</h1>
+
     <!-- ================= INTRO CURTAIN SCREEN ================= -->
     <div id="introScreen">
         <div class="intro-container">
-            <!-- App Logo from icon.png -->
             <div class="intro-logo-glow">
                 <img src="icon.png" alt="Nexus Tools Logo">
             </div>
@@ -731,10 +844,10 @@
 
     <!-- ================= SLIDE NAVIGATION DRAWER ================= -->
     <div class="drawer-backdrop" id="drawerBackdrop" onclick="toggleDrawer()"></div>
-    <aside class="drawer-nav" id="drawerNav">
+    <aside class="drawer-nav" id="drawerNav" aria-label="Side Navigation Drawer">
         <div class="drawer-header">
             <h3>Menu Navigation</h3>
-            <button class="close-drawer-btn" onclick="toggleDrawer()">
+            <button class="close-drawer-btn" onclick="toggleDrawer()" aria-label="Close Navigation Drawer">
                 <i class="fa-solid fa-xmark"></i>
             </button>
         </div>
@@ -768,28 +881,28 @@
     <main>
 
         <!-- 1. IMAGE TO LINK -->
-        <section id="tabImgbb" class="app-panel active">
+        <section id="tabImgbb" class="app-panel active" aria-labelledby="headingImgbb">
             <div class="glass-card">
                 <div class="card-header-block">
                     <div class="header-icon-badge">
                         <i class="fa-solid fa-cloud-arrow-up"></i>
                     </div>
                     <div>
-                        <h2>Image To Direct URL</h2>
-                        <p>Upload any picture and get an instant permanent link</p>
+                        <h2 id="headingImgbb">Image To Direct URL</h2>
+                        <p>Upload any picture and get an instant permanent link (High-Speed ImgBB Hosting)</p>
                     </div>
                 </div>
 
-                <div class="upload-field" id="dropArea" onclick="document.getElementById('hiddenFileInput').click()">
+                <div class="upload-field" id="dropArea" onclick="document.getElementById('hiddenFileInput').click()" role="button" tabindex="0">
                     <div class="upload-icon-anim">
                         <i class="fa-regular fa-image"></i>
                     </div>
                     <h3 id="uploadPromptText">Click or Drag & Drop Image</h3>
-                    <p>PNG, JPG, WEBP, GIF supported</p>
+                    <p>PNG, JPG, WEBP, GIF supported (Auto CDN Link)</p>
                 </div>
                 <input type="file" id="hiddenFileInput" accept="image/*" style="display:none;" onchange="handleFileChoose(this)">
 
-                <button class="btn-glow-primary" id="btnUploadImage" onclick="executeImageUpload()" disabled>
+                <button class="btn-glow-primary" id="btnUploadImage" onclick="executeImageUpload()" disabled aria-label="Generate Direct Image Link">
                     <i class="fa-solid fa-bolt"></i> Generate Direct Link
                 </button>
 
@@ -798,10 +911,10 @@
                         <img id="imgPreviewTarget" src="" alt="Direct Upload Image Preview">
                     </div>
                     <div class="field-group" style="margin-bottom:0;">
-                        <label for="imgUrlOutput">Generated Image URL</label>
+                        <label for="imgUrlOutput">Generated Image URL (Direct Link)</label>
                         <div class="input-inline-copy">
                             <input type="text" id="imgUrlOutput" class="copy-url-field" readonly>
-                            <button class="btn-action-icon" onclick="copyToClipboard('imgUrlOutput')">
+                            <button class="btn-action-icon" onclick="copyToClipboard('imgUrlOutput')" aria-label="Copy Direct Image URL">
                                 <i class="fa-regular fa-clone"></i> Copy
                             </button>
                         </div>
@@ -811,15 +924,15 @@
         </section>
 
         <!-- 2. QR CODE GENERATOR -->
-        <section id="tabQrGen" class="app-panel">
+        <section id="tabQrGen" class="app-panel" aria-labelledby="headingQrGen">
             <div class="glass-card">
                 <div class="card-header-block">
                     <div class="header-icon-badge" style="background:rgba(0, 242, 254, 0.1); border-color:rgba(0, 242, 254, 0.25); color:var(--accent-secondary);">
                         <i class="fa-solid fa-qrcode"></i>
                     </div>
                     <div>
-                        <h2>QR Code Generator</h2>
-                        <p>Convert website links or text into clean, high-resolution QR codes</p>
+                        <h2 id="headingQrGen">QR Code Generator</h2>
+                        <p>Convert website links, text, or payment info into clean, high-resolution QR codes</p>
                     </div>
                 </div>
 
@@ -837,7 +950,7 @@
                     </select>
                 </div>
 
-                <button class="btn-glow-primary" onclick="createQrCode()">
+                <button class="btn-glow-primary" onclick="createQrCode()" aria-label="Create Custom QR Code">
                     <i class="fa-solid fa-wand-magic-sparkles"></i> Generate QR Code
                 </button>
 
@@ -853,19 +966,19 @@
         </section>
 
         <!-- 3. QR SCANNER & DECODER -->
-        <section id="tabQrScan" class="app-panel">
+        <section id="tabQrScan" class="app-panel" aria-labelledby="headingQrScan">
             <div class="glass-card">
                 <div class="card-header-block">
                     <div class="header-icon-badge" style="background:rgba(245, 158, 11, 0.1); border-color:rgba(245, 158, 11, 0.25); color:#f59e0b;">
                         <i class="fa-solid fa-camera-rotate"></i>
                     </div>
                     <div>
-                        <h2>QR Code Decoder & Scanner</h2>
+                        <h2 id="headingQrScan">QR Code Decoder & Scanner</h2>
                         <p>Extract links and raw information from QR photos or live mobile camera</p>
                     </div>
                 </div>
 
-                <div class="upload-field" onclick="document.getElementById('qrFileInput').click()">
+                <div class="upload-field" onclick="document.getElementById('qrFileInput').click()" role="button" tabindex="0">
                     <div class="upload-icon-anim" style="color:#f59e0b;">
                         <i class="fa-regular fa-file-image"></i>
                     </div>
@@ -878,7 +991,7 @@
                     <span>or scan with camera</span>
                 </div>
 
-                <button class="btn-glow-primary" id="btnToggleCam" onclick="toggleCameraReader()" style="background:linear-gradient(135deg, #0284c7, #0369a1);">
+                <button class="btn-glow-primary" id="btnToggleCam" onclick="toggleCameraReader()" style="background:linear-gradient(135deg, #0284c7, #0369a1); box-shadow:0 10px 25px rgba(2, 132, 199, 0.35);">
                     <i class="fa-solid fa-camera"></i> Open Camera Scanner
                 </button>
 
@@ -889,7 +1002,7 @@
                         <label for="scanTextOutput">Decoded Link / Text</label>
                         <div class="input-inline-copy">
                             <input type="text" id="scanTextOutput" class="copy-url-field" readonly>
-                            <button class="btn-action-icon" onclick="copyToClipboard('scanTextOutput')">
+                            <button class="btn-action-icon" onclick="copyToClipboard('scanTextOutput')" aria-label="Copy Decoded QR Content">
                                 <i class="fa-regular fa-clone"></i> Copy
                             </button>
                         </div>
@@ -904,7 +1017,7 @@
         </section>
 
         <!-- 4. DEVELOPER PROFILE -->
-        <section id="tabAbout" class="app-panel">
+        <section id="tabAbout" class="app-panel" aria-labelledby="headingAbout">
             <div class="glass-card">
                 <div class="profile-hero">
                     <div class="avatar-frame-wrap">
@@ -915,7 +1028,7 @@
                         </div>
                     </div>
 
-                    <h2>Mozahid</h2>
+                    <h2 id="headingAbout">Mozahid</h2>
                     <div class="role-pill">
                         Full-Stack Developer
                     </div>
@@ -942,10 +1055,20 @@
             </div>
         </section>
 
+        <!-- SEO Organic Keywords & Information Block -->
+        <footer class="seo-footer-text">
+            <h3>NEXUS Ultra Suite by Mozahid</h3>
+            <p>
+                All-in-one Web Utilities: <strong>Image to Link Converter</strong> for generating direct CDN image URLs, 
+                <strong>High Definition QR Code Generator</strong> for websites and text, and 
+                <strong>Online QR Scanner & Decoder</strong> with live camera and gallery file support. Fast, secure, and responsive.
+            </p>
+        </footer>
+
     </main>
 
     <!-- FLOATING TOAST -->
-    <div id="notificationToast">
+    <div id="notificationToast" role="alert" aria-live="polite">
         <i class="fa-solid fa-circle-check"></i>
         <span id="toastMsg">Action Successful</span>
     </div>
